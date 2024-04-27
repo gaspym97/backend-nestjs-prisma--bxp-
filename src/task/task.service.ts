@@ -12,4 +12,35 @@ export class TaskService {
         return this.prisma.task.findMany();
     }
 
+    async getTaskByID(id: number): Promise<Task> {
+        return this.prisma.task.findUnique({
+            where: {
+                id: id,
+            }
+        });
+    }
+
+    async createtask(data: Task): Promise<Task> {
+        return this.prisma.task.create({
+            data
+        });
+    }
+
+    async updateTask(id: number, data: Task): Promise<Task> {
+        return this.prisma.task.update({
+            where: {
+                id,
+            },
+            data
+        });
+    }
+
+    async deleteTask(id: number): Promise<Task> {
+        return this.prisma.task.delete({
+            where: {
+                id
+            }
+        })
+    }
+
 }
