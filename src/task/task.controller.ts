@@ -14,26 +14,26 @@ export class TaskController {
     // these are the methods
     @Get()
     async getAllTasks() {
-        this.taskService.getAllTasks()
+        return this.taskService.getAllTasks()
     }
 
     @Post()
     async createTask(@Body() data: Task) {
-        this.taskService.createtask(data)
+        return this.taskService.createtask(data)
     }
 
     @Get(":id")
     async getTaskById(@Param('id') id: string) {
-        this.taskService.getTaskByID(Number(id))
+        return this.taskService.getTaskByID(Number(id))
     }
 
     @Delete(":id")
     async deleteTaskById(@Param('id') id: string) {
-        this.taskService.deleteTask(Number(id))
+        return this.taskService.deleteTask(Number(id))
     }
 
     @Put(":id")
     async updateTask(@Param('id') id: string, @Body() data: Task) {
-        this.taskService.updateTask(Number(id), data)
+        return this.taskService.updateTask(Number(id), data)
     }
 }
