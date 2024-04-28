@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, NotFoundException } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { Task } from '@prisma/client'
 
@@ -25,13 +25,17 @@ export class TaskController {
     @Get(":id")
     async getTaskById(@Param('id') id: string) {
         const task = await this.taskService.getTaskByID(Number(id))
-        if (!task) throw new BadRequestException("taks doesnt exist")
+        if (!task) throw new NotFoundException("taks doesnt exist")
         return task
     }
 
     @Delete(":id")
     async deleteTaskById(@Param('id') id: string) {
-        return this.taskService.deleteTask(Number(id))
+        try {
+            return await this.taskService.deleteTask(Number(id))
+        } catch (error) {
+            throw new NotFoundException("Task does not exist")
+        }
     }
 
     @Put(":id")
